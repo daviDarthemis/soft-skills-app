@@ -90,7 +90,6 @@ export default function PathPage() {
           <Link
             href={cta.href}
             aria-label={`${cta.label}: ${done} de ${total} situações`}
-            title={`${cta.label} · ${done}/${total}`}
             aria-hidden={!bannerHidden}
             tabIndex={bannerHidden ? 0 : -1}
             className={cn(

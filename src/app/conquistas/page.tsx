@@ -1,5 +1,7 @@
 "use client";
-import { Lock } from "lucide-react";
+import { useState } from "react";
+import { Lock, RotateCcw } from "lucide-react";
+import { ConfirmDialog } from "@/components/game/confirm-dialog";
 import { Shell, ProgressBar } from "@/components/game/shell";
 import { BoltIcon, FlameIcon, MedalIcon } from "@/components/game/icons";
 import { BADGES, useGame } from "@/game/store";
@@ -8,6 +10,8 @@ import { cn } from "@/lib/utils";
 export default function AchievementsPage() {
   const { state, level, resetAll } = useGame();
   const xpInLevel = state.xp % 100;
+  const [confirming, setConfirming] = useState(false);
+  const [cleared, setCleared] = useState(false);
 
   return (
     <Shell>
@@ -47,7 +51,7 @@ export default function AchievementsPage() {
         {BADGES.map((b, i) => {
           const earned = state.badges.includes(b.id);
           return (
-            <li key={b.id} className="flex animate-fade-up flex-col items-center text-center" style={{ animationDelay: `${i * 50}ms` }} title={b.description}>
+            <li key={b.id} className="flex animate-fade-up flex-col items-center text-center" style={{ animationDelay: `${i * 50}ms` }}>
               <div
                 className={cn(
                   "lift relative grid size-20 place-items-center rounded-full border-[5px] text-3xl",
@@ -58,6 +62,7 @@ export default function AchievementsPage() {
                 {!earned && <Lock className="absolute -bottom-1 -right-1 size-6 rounded-full bg-canvas p-1 text-soft" />}
               </div>
               <p className={cn("mt-1.5 line-clamp-2 min-h-[2rem] text-xs font-black leading-tight", earned ? "text-ink" : "text-soft")}>{b.title}</p>
+              <p className="mt-0.5 line-clamp-2 text-[11px] font-semibold leading-tight text-soft" aria-hidden="true">{b.description}</p>
               <p className="sr-only">
                 {earned ? "Conquistada" : "Bloqueada"}. {b.description}
               </p>
@@ -66,14 +71,30 @@ export default function AchievementsPage() {
         })}
       </ul>
 
-      <button
-        onClick={() => {
-          if (confirm("Apagar todo o progresso, XP e insígnias?")) resetAll();
+      <div className="mt-10">
+        {cleared ? (
+          <p className="animate-pop text-center text-sm font-extrabold text-pop" role="status">
+            Progresso apagado. Bora começar de novo!
+          </p>
+        ) : (
+          <button type="button" onClick={() => setConfirming(true)} className="w-full text-sm font-bold text-soft hover:text-coral-600">
+            Reiniciar progresso
+          </button>
+        )}
+      </div>
+      <ConfirmDialog
+        open={confirming}
+        icon={<RotateCcw className="size-8" strokeWidth={2.5} />}
+        title="Apagar todo o progresso?"
+        description="Respostas, XP, sequência e insígnias voltam do zero. Não dá para desfazer."
+        confirmLabel="Apagar tudo"
+        onCancel={() => setConfirming(false)}
+        onConfirm={() => {
+          resetAll();
+          setConfirming(false);
+          setCleared(true);
         }}
-        className="mt-10 w-full text-sm font-bold text-soft hover:text-coral-600"
-      >
-        Reiniciar progresso
-      </button>
+      />
     </Shell>
   );
 }

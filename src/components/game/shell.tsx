@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Moon, Sun } from "lucide-react";
-import { useGame } from "@/game/store";
+import { BADGES, useGame } from "@/game/store";
 import { cn } from "@/lib/utils";
 import { playThemeSwap } from "./theme-swap";
+import { Tooltip } from "./tooltip";
 import { BoltIcon, FlameIcon, HomeNavIcon, InfoNavIcon, MedalIcon, TrophyNavIcon } from "./icons";
 import { ProgressBar } from "./progress-bar";
 import { CourseCard, DailyGoal, NextBadge, WeekStreak } from "./widgets";
@@ -21,12 +22,15 @@ function useIsActive() {
   return (href: string) => (href === "/" ? pathname === "/" || pathname.startsWith("/trilha") : pathname.startsWith(href));
 }
 
-function Stat({ icon, value, label, className }: { icon: React.ReactNode; value: React.ReactNode; label: string; className?: string }) {
+function Stat({ icon, value, label, tip, align, className }: { icon: React.ReactNode; value: React.ReactNode; label: string; tip: React.ReactNode; align: "start" | "center" | "end"; className?: string }) {
   return (
-    <div className={cn("group flex h-9 items-center gap-1.5 font-display text-base font-semibold leading-none tabular-nums", className)} aria-label={label} title={label}>
-      <span className="grid size-6 shrink-0 place-items-center transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110">{icon}</span>
-      <span className="min-w-[1ch]">{value}</span>
-    </div>
+    <Tooltip text={tip} align={align}>
+      {/* tabIndex: no toque/teclado o foco também mostra a dica */}
+      <div tabIndex={0} className={cn("group flex h-9 items-center gap-1.5 rounded-lg font-display text-base font-semibold leading-none tabular-nums outline-offset-4", className)} aria-label={label}>
+        <span className="grid size-6 shrink-0 place-items-center transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110">{icon}</span>
+        <span className="min-w-[1ch]">{value}</span>
+      </div>
+    </Tooltip>
   );
 }
 
@@ -35,9 +39,30 @@ function Stats({ className }: { className?: string }) {
   const show = (v: number) => (ready ? v : "–");
   return (
     <div className={cn("flex items-center gap-4 sm:gap-6", className)}>
-      <Stat icon={<FlameIcon className="size-6" />} value={show(state.streak.count)} label={`Sequência de ${state.streak.count} dias`} className="text-coral-600 dark:text-coral" />
-      <Stat icon={<BoltIcon className="size-6" />} value={show(state.xp)} label={`${state.xp} pontos de experiência`} className="text-sun-700 dark:text-sun" />
-      <Stat icon={<MedalIcon className="size-6" />} value={show(state.badges.length)} label={`${state.badges.length} insígnias`} className="text-pop" />
+      <Stat
+        icon={<FlameIcon className="size-6" />}
+        value={show(state.streak.count)}
+        label={`Sequência de ${state.streak.count} dias`}
+        tip={<><b>Sequência</b> · {state.streak.count} {state.streak.count === 1 ? "dia" : "dias"} seguidos</>}
+        align="start"
+        className="text-coral-600 dark:text-coral"
+      />
+      <Stat
+        icon={<BoltIcon className="size-6" />}
+        value={show(state.xp)}
+        label={`${state.xp} pontos de experiência`}
+        tip={<><b>XP</b> · {state.xp} pontos de experiência</>}
+        align="center"
+        className="text-sun-700 dark:text-sun"
+      />
+      <Stat
+        icon={<MedalIcon className="size-6" />}
+        value={show(state.badges.length)}
+        label={`${state.badges.length} insígnias`}
+        tip={<><b>Insígnias</b> · {state.badges.length} de {BADGES.length}</>}
+        align="end"
+        className="text-pop"
+      />
     </div>
   );
 }

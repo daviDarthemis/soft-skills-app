@@ -6,6 +6,7 @@ import { ArrowLeft, ExternalLink, FileText, MessagesSquare, RotateCcw, Sparkles 
 import { Shell } from "@/components/game/shell";
 import { TrailHero } from "@/components/game/trail-card";
 import StageNode from "@/components/game/stage-node";
+import { ConfirmDialog } from "@/components/game/confirm-dialog";
 import { getTrail } from "@/game/trails";
 import { answeredCount, useGame } from "@/game/store";
 
@@ -73,32 +74,23 @@ export default function TrailPage() {
           </a>
         )}
         {/* Recomeçar apaga as respostas desta trilha (insígnias e XP já ganhos ficam): pede confirmação e abre o desafio. */}
-        {answeredCount(p) > 0 &&
-          (confirming ? (
-            <div className="animate-pop rounded-2xl border-2 border-coral/40 bg-coral-100 p-4 text-night" role="alert">
-              <p className="mb-3 font-extrabold">Recomeçar a trilha? Suas respostas desta trilha serão apagadas. XP e insígnias continuam.</p>
-              <div className="grid grid-cols-2 gap-3">
-                <button type="button" onClick={() => setConfirming(false)} className="btn-3d ghost">
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  autoFocus
-                  onClick={() => {
-                    restart(trail.slug);
-                    router.push(`/trilha/${trail.slug}/desafio`);
-                  }}
-                  className="btn-3d coral"
-                >
-                  Recomeçar
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button type="button" onClick={() => setConfirming(true)} className="btn-3d ghost w-full">
-              <RotateCcw className="size-4" /> {p.completed ? "Refazer desafio" : "Recomeçar do zero"}
-            </button>
-          ))}
+        {answeredCount(p) > 0 && (
+          <button type="button" onClick={() => setConfirming(true)} className="btn-3d ghost w-full">
+            <RotateCcw className="size-4" /> {p.completed ? "Refazer desafio" : "Recomeçar do zero"}
+          </button>
+        )}
+        <ConfirmDialog
+          open={confirming}
+          icon={<RotateCcw className="size-8" strokeWidth={2.5} />}
+          title="Recomeçar a trilha?"
+          description="Suas respostas desta trilha serão apagadas. XP e insígnias que você já ganhou continuam."
+          confirmLabel="Recomeçar"
+          onCancel={() => setConfirming(false)}
+          onConfirm={() => {
+            restart(trail.slug);
+            router.push(`/trilha/${trail.slug}/desafio`);
+          }}
+        />
       </div>
     </Shell>
   );

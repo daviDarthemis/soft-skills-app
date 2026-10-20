@@ -6,6 +6,7 @@ import { TRAILS } from "@/game/trails";
 import { cn } from "@/lib/utils";
 import { CheckIcon, FlameIcon, MedalIcon, TrailEmblem } from "./icons";
 import { ProgressBar } from "./progress-bar";
+import { Tooltip } from "./tooltip";
 import { TRAIL_STYLE } from "./trail-card";
 
 const panel = "rounded-2xl border-2 border-rule p-5";
@@ -101,14 +102,26 @@ export function NextBadge() {
         </p>
       )}
       <ul className="grid grid-cols-8 gap-1.5" aria-label="Coleção de insígnias">
-        {BADGES.map((b) => {
+        {BADGES.map((b, i) => {
           const earned = ready && state.badges.includes(b.id);
           return (
-            <li key={b.id} title={b.title} className={cn("grid aspect-square place-items-center rounded-full text-sm", earned ? "bg-sun-100" : "bg-panel opacity-50 grayscale")}>
-              <span aria-hidden="true">{b.emoji}</span>
-              <span className="sr-only">
-                {b.title}: {earned ? "conquistada" : "bloqueada"}
-              </span>
+            <li key={b.id}>
+              <Tooltip
+                side="top"
+                align={i === 0 ? "start" : i === BADGES.length - 1 ? "end" : "center"}
+                text={<><b>{b.title}</b> · {earned ? "conquistada" : b.description}</>}
+                className="w-full"
+              >
+                <span
+                  tabIndex={0}
+                  className={cn("grid aspect-square w-full place-items-center rounded-full text-sm", earned ? "bg-sun-100" : "bg-panel opacity-50 grayscale")}
+                >
+                  <span aria-hidden="true">{b.emoji}</span>
+                  <span className="sr-only">
+                    {b.title}: {earned ? "conquistada" : "bloqueada"}
+                  </span>
+                </span>
+              </Tooltip>
             </li>
           );
         })}

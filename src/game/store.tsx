@@ -179,7 +179,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggleVoice = useCallback(() => setState((s) => ({ ...s, voice: !s.voice })), []);
-  const resetAll = useCallback(() => setState({ ...INITIAL, voice: state.voice }), [state.voice]);
+  const resetAll = useCallback(() => {
+    // Também apaga os resultados guardados no formato antigo, usados pelo relatório completo.
+    try {
+      ["lastResults", "lastPoints", "finalFeedback"].forEach((k) => localStorage.removeItem(k));
+    } catch {
+      /* armazenamento indisponível */
+    }
+    setState((s) => ({ ...INITIAL, voice: s.voice }));
+  }, []);
 
   const value = useMemo(
     () => ({ state, ready, level: Math.floor(state.xp / 100) + 1, progressOf, answer, restart, toggleVoice, resetAll }),

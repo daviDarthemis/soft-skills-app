@@ -6,8 +6,10 @@ import { Volume2, VolumeX, X } from "lucide-react";
 import { ProgressBar } from "@/components/game/shell";
 import { BoltIcon, FlameIcon, MedalIcon, SoundIcon } from "@/components/game/icons";
 import { Narrator } from "@/components/game/characters";
+import { Celebration, type CelebrationProps } from "@/components/game/celebration";
+import { computeResult } from "@/game/scoring";
 import { getTrail } from "@/game/trails";
-import { answeredCount, BADGES, useGame } from "@/game/store";
+import { answeredCount, BADGES, useGame, type TrailProgress } from "@/game/store";
 import { useSpeech } from "@/game/use-speech";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +24,9 @@ export default function ChallengePage() {
 
   const [index, setIndex] = useState<number | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState<{ xp: number; cheer: string; finished: boolean; badges: string[] } | null>(null);
+  const [feedback, setFeedback] = useState<{ xp: number; cheer: string; finished: boolean; badges: string[]; level?: number } | null>(null);
+  // Cerimônia (insígnia caindo) ao concluir a trilha ou subir de nível, antes de seguir.
+  const [celebration, setCelebration] = useState<CelebrationProps | null>(null);
 
   if (!trail) notFound();
   const total = trail.questions.length;
@@ -51,7 +55,7 @@ export default function ChallengePage() {
   // Atalhos: números escolhem a resposta, Enter confirma (ou continua depois do feedback).
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (!question || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (!question || celebration || e.metaKey || e.ctrlKey || e.altKey) return;
       const target = e.target instanceof Element ? e.target : null;
       if (target?.closest("input, textarea, [contenteditable]")) return;
       const n = Number(e.key);
@@ -85,15 +89,54 @@ export default function ChallengePage() {
   function confirm() {
     if (!selectedOption) return;
     stop();
+    const levelBefore = Math.floor(state.xp / 100) + 1;
     const r = answer(trail!.slug, index!, selectedOption.value);
-    setFeedback({ xp: r.xpGained, cheer: CHEERS[index! % CHEERS.length], finished: r.finished, badges: r.newBadges });
+    const levelAfter = Math.floor((state.xp + r.xpGained) / 100) + 1;
+    setFeedback({
+      xp: r.xpGained,
+      cheer: CHEERS[index! % CHEERS.length],
+      finished: r.finished,
+      badges: r.newBadges,
+      level: levelAfter > levelBefore ? levelAfter : undefined,
+    });
   }
 
   function next() {
-    if (feedback?.finished) {
-      router.push(`/trilha/${trail!.slug}/resultado?celebrar=1`);
+    if (!feedback) return;
+    if (feedback.finished) {
+      const p: TrailProgress = progressOf(trail!.slug);
+      const result = computeResult(trail!, p.answers as (string | number)[]);
+      setCelebration({
+        kind: "trail",
+        emoji: result.emoji,
+        eyebrow: "Trilha concluída!",
+        title: result.title,
+        subtitle: feedback.level ? `${result.heading} · e você subiu para o nível ${feedback.level}!` : result.heading,
+        xp: feedback.xp,
+        cta: "Ver meu perfil",
+        onContinue: () => router.push(`/trilha/${trail!.slug}/resultado`),
+      });
       return;
     }
+    if (feedback.level) {
+      setCelebration({
+        kind: "level",
+        level: feedback.level,
+        eyebrow: "Subiu de nível!",
+        title: `Nível ${feedback.level}`,
+        subtitle: "Continue respondendo para ganhar mais XP.",
+        cta: "Continuar",
+        onContinue: () => {
+          setCelebration(null);
+          advance();
+        },
+      });
+      return;
+    }
+    advance();
+  }
+
+  function advance() {
     const p = progressOf(trail!.slug);
     const nextIndex = p.answers.findIndex((a) => a === null);
     setFeedback(null);
@@ -194,6 +237,8 @@ export default function ChallengePage() {
           })}
         </section>
       </main>
+
+      {celebration && <Celebration {...celebration} />}
 
       {/* Rodapé: confirmar, depois o painel de feedback sobe */}
       <footer className="fixed inset-x-0 bottom-0 z-30 pb-[env(safe-area-inset-bottom)]">
