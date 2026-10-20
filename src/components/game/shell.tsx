@@ -118,7 +118,7 @@ export function ThemeToggle({ className, withLabel = false }: { className?: stri
 /** Barra superior (celular e tablet): nível, estatísticas e tema, com espaço entre os ícones. */
 export function TopBar() {
   return (
-    <header className="sticky top-0 z-30 border-b-2 border-rule bg-canvas/90 backdrop-blur xl:hidden">
+    <header className="sticky top-0 z-30 border-b-2 border-rule bg-canvas/90 backdrop-blur-sm xl:hidden">
       <div className="mx-auto flex h-14 max-w-xl items-center justify-between gap-3 px-4 sm:px-6">
         <span className="lg:invisible">
           <LevelBadge />

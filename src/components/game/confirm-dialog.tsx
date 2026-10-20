@@ -43,7 +43,7 @@ export function ConfirmDialog({ open, icon, title, description, confirmLabel, ca
 
   if (!mounted || !open) return null;
   return createPortal(
-    <div className="fixed inset-0 z-[80] grid animate-[fade-in_.2s_ease-out_both] place-items-center bg-night/60 p-4" onClick={onCancel}>
+    <div className="fixed inset-0 z-80 grid animate-[fade-in_.2s_ease-out_both] place-items-center bg-night/60 p-4" onClick={onCancel}>
       <div
         role="alertdialog"
         aria-modal="true"

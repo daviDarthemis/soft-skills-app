@@ -54,8 +54,8 @@ export function Narrator({ children, talking, stack, className }: { children: Re
         {/* ponta do balão voltada para o avatar */}
         <span
           className={cn(
-            "absolute -left-[9px] bottom-5 size-4 rotate-45 border-b-2 border-l-2 border-rule bg-canvas",
-            stack && "lg:-top-[9px] lg:bottom-auto lg:left-16 lg:border-b-0 lg:border-t-2",
+            "absolute left-[-9px] bottom-5 size-4 rotate-45 border-b-2 border-l-2 border-rule bg-canvas",
+            stack && "lg:top-[-9px] lg:bottom-auto lg:left-16 lg:border-b-0 lg:border-t-2",
           )}
           aria-hidden="true"
         />

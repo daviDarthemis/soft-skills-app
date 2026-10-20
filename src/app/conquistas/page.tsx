@@ -61,7 +61,7 @@ export default function AchievementsPage() {
                 <span aria-hidden="true">{b.emoji}</span>
                 {!earned && <Lock className="absolute -bottom-1 -right-1 size-6 rounded-full bg-canvas p-1 text-soft" />}
               </div>
-              <p className={cn("mt-1.5 line-clamp-2 min-h-[2rem] text-xs font-black leading-tight", earned ? "text-ink" : "text-soft")}>{b.title}</p>
+              <p className={cn("mt-1.5 line-clamp-2 min-h-8 text-xs font-black leading-tight", earned ? "text-ink" : "text-soft")}>{b.title}</p>
               <p className="mt-0.5 line-clamp-2 text-[11px] font-semibold leading-tight text-soft" aria-hidden="true">{b.description}</p>
               <p className="sr-only">
                 {earned ? "Conquistada" : "Bloqueada"}. {b.description}

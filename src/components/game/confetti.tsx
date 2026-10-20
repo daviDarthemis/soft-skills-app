@@ -29,7 +29,7 @@ export default function Confetti({ pieces = 60 }: { pieces?: number }) {
   }, []);
   if (!mounted || done) return null;
   return createPortal(
-    <div className="pointer-events-none fixed inset-0 z-[95] overflow-hidden motion-reduce:hidden" aria-hidden="true">
+    <div className="pointer-events-none fixed inset-0 z-95 overflow-hidden motion-reduce:hidden" aria-hidden="true">
       {items.map((p, i) => (
         <span
           key={i}

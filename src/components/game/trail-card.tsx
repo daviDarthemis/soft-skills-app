@@ -28,7 +28,7 @@ export function TrailHero({ trail, className }: { trail: Trail; className?: stri
           <h2 className="line-clamp-2 font-display text-2xl font-semibold leading-tight">{trail.title}</h2>
           <p className={cn("mt-0.5 line-clamp-2 text-sm font-bold", style.strong)}>{trail.tagline}</p>
         </div>
-        <TrailEmblem slug={trail.slug} className="size-16 shrink-0 transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-translate-y-1 group-hover:rotate-[-6deg]" />
+        <TrailEmblem slug={trail.slug} className="size-16 shrink-0 transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-translate-y-1 group-hover:-rotate-6" />
       </div>
       <div className="mt-auto flex items-center gap-3 pt-5">
         <ProgressBar value={done} max={total} className="bg-white/70" />
