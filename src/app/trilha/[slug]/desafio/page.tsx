@@ -5,6 +5,7 @@ import { notFound, useParams, useRouter } from "next/navigation";
 import { Volume2, VolumeX, X } from "lucide-react";
 import { ProgressBar } from "@/components/game/shell";
 import { BoltIcon, FlameIcon, MedalIcon, SoundIcon } from "@/components/game/icons";
+import { Narrator } from "@/components/game/characters";
 import { getTrail } from "@/game/trails";
 import { answeredCount, BADGES, useGame } from "@/game/store";
 import { useSpeech } from "@/game/use-speech";
@@ -47,6 +48,26 @@ export default function ChallengePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [question?.id, state.voice]);
 
+  // Atalhos: números escolhem a resposta, Enter confirma (ou continua depois do feedback).
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (!question || e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target instanceof Element ? e.target : null;
+      if (target?.closest("input, textarea, [contenteditable]")) return;
+      const n = Number(e.key);
+      if (!feedback && n >= 1 && n <= question.options.length) {
+        e.preventDefault();
+        choose(question.options[n - 1].key);
+      } else if (e.key === "Enter" && !(target instanceof HTMLButtonElement)) {
+        e.preventDefault();
+        if (feedback) next();
+        else confirm();
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
   if (!question || index === null) {
     return <div className="grid min-h-dvh place-items-center bg-canvas font-bold text-pop">Carregando…</div>;
   }
@@ -83,7 +104,7 @@ export default function ChallengePage() {
   return (
     <div className="flex min-h-dvh flex-col bg-canvas text-ink">
       {/* Cabeçalho: sair (o progresso fica salvo), barra de progresso, sequência e voz */}
-      <header className="mx-auto flex h-16 w-full max-w-xl items-center gap-3 px-4 sm:px-6">
+      <header className="mx-auto flex h-16 w-full max-w-xl items-center gap-3 px-4 sm:px-6 lg:h-20 lg:max-w-5xl lg:gap-5">
         <Link
           href={`/trilha/${trail.slug}/caminho`}
           aria-label="Sair (seu progresso fica salvo)"
@@ -116,27 +137,36 @@ export default function ChallengePage() {
       </header>
 
       {/* Cada pergunta entra deslizando da direita */}
-      <main key={question.id} className="mx-auto w-full max-w-xl flex-1 animate-slide-in px-4 pb-40 sm:px-6">
-        <p className="mb-2 mt-3 text-xs font-black uppercase tracking-wider text-pop">
-          Situação {index + 1} de {total}
+      {/* No computador: situação e narrador à esquerda, respostas à direita, centralizados na altura. */}
+      <main
+        key={question.id}
+        className="mx-auto w-full max-w-xl flex-1 animate-slide-in px-4 pb-40 sm:px-6 lg:grid lg:max-w-5xl lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:content-center lg:items-center lg:gap-16 lg:pb-36"
+      >
+        <div>
+        <p className="mb-2 mt-3 flex items-center gap-2 text-xs font-black uppercase tracking-wider text-pop lg:mt-0">
+          <span className="hidden lg:inline">{trail.title} ·</span> Situação {index + 1} de {total}
         </p>
-        <h1 className="font-display text-2xl font-semibold leading-tight">{question.prompt}</h1>
+        <h1 className="font-display text-2xl font-semibold leading-tight lg:text-3xl">{question.prompt}</h1>
 
-        <section className="relative mt-4 flex items-start gap-3 rounded-2xl border-2 border-rule bg-panel p-4" aria-live="polite">
-          <button
-            type="button"
-            onClick={() => speak(narration, "q")}
-            aria-label="Ouvir a pergunta"
-            className={cn("shrink-0 transition-transform hover:scale-110", speaking === "q" && "speaking")}
-          >
-            <SoundIcon className="size-9" />
-          </button>
-          <p className="pt-1 font-bold leading-snug">
-            {question.statement ? `“${question.statement}”` : "Escolha a resposta que mais combina com você. Não existe resposta errada."}
-          </p>
-        </section>
+        {/* O narrador apresenta a situação; o avatar anima a fala durante a leitura em voz. */}
+        <Narrator talking={speaking === "q"} stack className="mt-4 lg:mt-6">
+          <div className="flex items-start gap-3" aria-live="polite">
+            <p className="min-w-0 flex-1 font-bold leading-snug">
+              {question.statement ? `“${question.statement}”` : "Escolha a resposta que mais combina com você. Não existe resposta errada."}
+            </p>
+            <button
+              type="button"
+              onClick={() => speak(narration, "q")}
+              aria-label="Ouvir a pergunta"
+              className={cn("shrink-0 transition-transform hover:scale-110", speaking === "q" && "speaking")}
+            >
+              <SoundIcon className="size-8" />
+            </button>
+          </div>
+        </Narrator>
+        </div>
 
-        <section role="radiogroup" aria-label="Respostas" className="mt-6 space-y-3">
+        <section role="radiogroup" aria-label="Respostas" className="mt-6 space-y-3 lg:mt-0">
           {question.options.map((opt, i) => {
             const isSel = opt.key === selected;
             return (
@@ -169,8 +199,8 @@ export default function ChallengePage() {
       <footer className="fixed inset-x-0 bottom-0 z-30 pb-[env(safe-area-inset-bottom)]">
         {feedback ? (
           <div className="animate-slide-up border-t-2 border-brand/30 bg-brand-100 text-brand-700 dark:bg-[#2A2348] dark:text-[#C9BEFF]">
-            <div className="mx-auto max-w-xl px-4 pb-6 pt-4 sm:px-6">
-              <div className="mb-4 flex items-center gap-3">
+            <div className="mx-auto max-w-xl px-4 pb-6 pt-4 sm:px-6 lg:flex lg:max-w-5xl lg:items-center lg:justify-between lg:gap-8 lg:py-6">
+              <div className="mb-4 flex items-center gap-3 lg:mb-0">
                 <span className="fire grid size-14 shrink-0 place-items-center">
                   <BoltIcon className="size-12" />
                 </span>
@@ -189,15 +219,19 @@ export default function ChallengePage() {
                   })}
                 </div>
               </div>
-              <button autoFocus onClick={next} className="btn-3d sun w-full">
+              <button autoFocus onClick={next} className="btn-3d sun w-full lg:w-64">
                 {feedback.finished ? "Ver meu perfil" : "Continuar"}
               </button>
             </div>
           </div>
         ) : (
           <div className="border-t-2 border-rule bg-canvas">
-            <div className="mx-auto max-w-xl px-4 pb-6 pt-4 sm:px-6">
-              <button onClick={confirm} disabled={!selectedOption} className="btn-3d w-full">
+            <div className="mx-auto max-w-xl px-4 pb-6 pt-4 sm:px-6 lg:flex lg:max-w-5xl lg:items-center lg:justify-between lg:gap-8 lg:py-6">
+              {/* Atalhos só fazem sentido com teclado: a dica aparece no computador. */}
+              <p className="hidden text-sm font-bold text-soft lg:block">
+                Teclas <Kbd>1</Kbd>–<Kbd>{question.options.length}</Kbd> para escolher · <Kbd>Enter</Kbd> para confirmar
+              </p>
+              <button onClick={confirm} disabled={!selectedOption} className="btn-3d w-full lg:w-64">
                 {selectedOption ? "Confirmar" : "Escolha uma resposta"}
               </button>
             </div>
@@ -206,4 +240,8 @@ export default function ChallengePage() {
       </footer>
     </div>
   );
+}
+
+function Kbd({ children }: { children: React.ReactNode }) {
+  return <kbd className="mx-0.5 rounded-md border-2 border-b-4 border-rule px-1.5 py-0.5 font-display text-xs font-semibold text-ink">{children}</kbd>;
 }

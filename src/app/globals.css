@@ -80,7 +80,6 @@
   --ink: 241 238 250; --soft: 166 159 190; --pop: 160 140 255;
   color-scheme: dark;
 }
-body { transition: background-color .3s, color .3s; }
 h1, h2, h3, .font-display { text-wrap: balance; }
 
 /* Botão 3D: sombra sólida embaixo; sobe no hover, afunda no clique. */
@@ -186,6 +185,20 @@ h1, h2, h3, .font-display { text-wrap: balance; }
 .chk { stroke-dasharray: 40; stroke-dashoffset: 0; }
 .fire .chk { animation: draw .5s cubic-bezier(.22,1,.36,1); }
 @keyframes draw { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+
+/* Avatares vetoriais: balanço da cabeça, respiração, piscar, olhar e fala. */
+.av .head { transform-box: view-box; transform-origin: 80px 128px; }
+.av .torso { transform-box: view-box; transform-origin: 80px 160px; animation: av-breathe 4s ease-in-out infinite; }
+.av.idle-nod .head { animation: av-nod 2.8s ease-in-out infinite; }
+.av .eyeball { transform-box: view-box; animation: av-blink var(--bt, 5s) infinite var(--bd, 0s); }
+.av .pup { animation: av-glance var(--gt, 7s) ease-in-out infinite var(--bd, 0s); }
+.av .mouth { transform-box: fill-box; transform-origin: 50% 20%; }
+.av.talking .mouth { animation: av-talk .19s ease-in-out infinite alternate; }
+@keyframes av-nod { 0%, 100% { transform: translateY(0) rotate(0); } 25% { transform: translateY(3px) rotate(1.5deg); } 50% { transform: translateY(0) rotate(0); } }
+@keyframes av-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.014); } }
+@keyframes av-blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.06); } }
+@keyframes av-glance { 0%, 38%, 100% { transform: translate(0, 0); } 44%, 66% { transform: translate(var(--gx, 2px), var(--gy, 0px)); } 72% { transform: translate(0, 0); } }
+@keyframes av-talk { from { transform: scaleY(1); } to { transform: scaleY(.55); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }

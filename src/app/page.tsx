@@ -1,5 +1,6 @@
 "use client";
 import { Shell } from "@/components/game/shell";
+import { SiteFooter } from "@/components/game/site-footer";
 import TrailCard from "@/components/game/trail-card";
 import { ContinueHero, DailyGoal, WeekStreak } from "@/components/game/widgets";
 import { TRAILS } from "@/game/trails";
@@ -53,9 +54,7 @@ export default function Home() {
         </ol>
       </section>
 
-      <footer className="mt-10 text-center text-xs font-semibold text-soft">
-        <p>Faculdade de Tecnologia e Inovação Senac DF</p>
-      </footer>
+      <SiteFooter />
     </Shell>
   );
 }

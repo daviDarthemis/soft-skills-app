@@ -1,6 +1,7 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { ArrowLeft, ExternalLink, FileText, MessagesSquare, RotateCcw, Sparkles } from "lucide-react";
 import { Shell } from "@/components/game/shell";
 import { TrailHero } from "@/components/game/trail-card";
@@ -11,7 +12,9 @@ import { answeredCount, useGame } from "@/game/store";
 export default function TrailPage() {
   const { slug } = useParams<{ slug: string }>();
   const trail = getTrail(slug);
+  const router = useRouter();
   const { progressOf, restart } = useGame();
+  const [confirming, setConfirming] = useState(false);
   if (!trail) notFound();
 
   const p = progressOf(trail.slug);
@@ -69,11 +72,33 @@ export default function TrailPage() {
             <ExternalLink className="size-4 text-pop" />
           </a>
         )}
-        {(p.completed || unlocked) && (
-          <button type="button" onClick={() => restart(trail.slug)} className="btn-3d ghost w-full">
-            <RotateCcw className="size-4" /> Refazer desafio
-          </button>
-        )}
+        {/* Recomeçar apaga as respostas desta trilha (insígnias e XP já ganhos ficam): pede confirmação e abre o desafio. */}
+        {answeredCount(p) > 0 &&
+          (confirming ? (
+            <div className="animate-pop rounded-2xl border-2 border-coral/40 bg-coral-100 p-4 text-night" role="alert">
+              <p className="mb-3 font-extrabold">Recomeçar a trilha? Suas respostas desta trilha serão apagadas. XP e insígnias continuam.</p>
+              <div className="grid grid-cols-2 gap-3">
+                <button type="button" onClick={() => setConfirming(false)} className="btn-3d ghost">
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  autoFocus
+                  onClick={() => {
+                    restart(trail.slug);
+                    router.push(`/trilha/${trail.slug}/desafio`);
+                  }}
+                  className="btn-3d coral"
+                >
+                  Recomeçar
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button type="button" onClick={() => setConfirming(true)} className="btn-3d ghost w-full">
+              <RotateCcw className="size-4" /> {p.completed ? "Refazer desafio" : "Recomeçar do zero"}
+            </button>
+          ))}
       </div>
     </Shell>
   );

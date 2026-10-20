@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Moon, Sun } from "lucide-react";
 import { useGame } from "@/game/store";
 import { cn } from "@/lib/utils";
+import { playThemeSwap } from "./theme-swap";
 import { BoltIcon, FlameIcon, HomeNavIcon, InfoNavIcon, MedalIcon, TrophyNavIcon } from "./icons";
 import { ProgressBar } from "./progress-bar";
 import { CourseCard, DailyGoal, NextBadge, WeekStreak } from "./widgets";
@@ -54,8 +55,7 @@ function LevelBadge({ withLabel = true }: { withLabel?: boolean }) {
 export function ThemeToggle({ className, withLabel = false }: { className?: string; withLabel?: boolean }) {
   const [dark, setDark] = useState<boolean | null>(null);
   useEffect(() => setDark(document.documentElement.dataset.theme === "dark"), []);
-  function toggle() {
-    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  function apply(next: "light" | "dark") {
     document.documentElement.dataset.theme = next;
     try {
       localStorage.setItem("ssa:theme", next);
@@ -63,6 +63,12 @@ export function ThemeToggle({ className, withLabel = false }: { className?: stri
       /* armazenamento indisponível: a troca vale só nesta visita */
     }
     setDark(next === "dark");
+  }
+  function toggle(e: React.MouseEvent<HTMLButtonElement>) {
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return apply(next);
+    const r = e.currentTarget.getBoundingClientRect();
+    playThemeSwap({ x: r.left + r.width / 2, y: r.top + r.height / 2 }, next, () => apply(next));
   }
   const label = dark ? "Usar tema claro" : "Usar tema escuro";
   return (
@@ -76,7 +82,7 @@ export function ThemeToggle({ className, withLabel = false }: { className?: stri
         className,
       )}
     >
-      <span key={String(dark)} className="animate-icon-pop">
+      <span key={String(dark)} className="inline-flex animate-theme-spin">
         {dark ? <Sun className="size-5" /> : <Moon className="size-5" />}
       </span>
       {withLabel && <span>{dark ? "Tema claro" : "Tema escuro"}</span>}

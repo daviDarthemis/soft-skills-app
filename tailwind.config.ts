@@ -115,6 +115,11 @@ const config = {
           from: { opacity: "0", transform: "translateY(10px) scale(.985)" },
           to: { opacity: "1", transform: "none" },
         },
+        "theme-spin": {
+          from: { transform: "rotate(-120deg) scale(.3)", opacity: "0" },
+          "60%": { transform: "rotate(15deg) scale(1.15)", opacity: "1" },
+          to: { transform: "rotate(0) scale(1)" },
+        },
         nudge: {
           "0%,100%": { transform: "translateY(0) rotate(0)" },
           "40%": { transform: "translateY(-4px) rotate(-8deg)" },
@@ -141,6 +146,7 @@ const config = {
         float: "float 3s ease-in-out infinite",
         "page-in": "page-in .32s cubic-bezier(.22,1,.36,1) both",
         nudge: "nudge .5s cubic-bezier(.34,1.56,.64,1)",
+        "theme-spin": "theme-spin .55s cubic-bezier(.34,1.56,.64,1)",
         "icon-pop": "icon-pop .4s cubic-bezier(.34,1.56,.64,1)",
         confetti: "confetti 2.5s ease-in forwards",
       },
