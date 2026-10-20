@@ -127,7 +127,7 @@ const config = {
         },
         confetti: {
           "0%": { transform: "translateY(0) rotate(0)", opacity: "1" },
-          "100%": { transform: "translateY(110vh) rotate(720deg)", opacity: "0.6" },
+          "100%": { transform: "translateY(110vh) rotate(720deg)", opacity: "0" },
         },
       },
       animation: {

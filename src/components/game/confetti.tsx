@@ -1,5 +1,6 @@
 "use client";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 const COLORS = ["#FFC83D", "#4CC2FF", "#7B61FF", "#FF6B6B", "#34D399", "#A08CFF"];
 
@@ -18,7 +19,16 @@ export default function Confetti({ pieces = 60 }: { pieces?: number }) {
       })),
     [pieces],
   );
-  return (
+  // Vai por portal para o body (o main tem transform, que prenderia o "fixed" à coluna) e sai da tela quando termina.
+  const [mounted, setMounted] = useState(false);
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    const t = setTimeout(() => setDone(true), 4200);
+    return () => clearTimeout(t);
+  }, []);
+  if (!mounted || done) return null;
+  return createPortal(
     <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden motion-reduce:hidden" aria-hidden="true">
       {items.map((p, i) => (
         <span
@@ -36,6 +46,7 @@ export default function Confetti({ pieces = 60 }: { pieces?: number }) {
           }}
         />
       ))}
-    </div>
+    </div>,
+    document.body,
   );
 }
