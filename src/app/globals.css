@@ -65,8 +65,130 @@
   }
 
   body {
-    @apply bg-neutral-50 text-foreground;
+    @apply bg-canvas text-ink;
   }
+}
+
+/* Tema do app: claro por padrão, escuro com data-theme="dark" no <html> (segue o sistema até o usuário escolher). */
+:root, [data-theme="light"] {
+  --canvas: 255 255 255; --panel: 246 244 253; --panel2: 236 232 250; --rule: 228 223 244;
+  --ink: 34 28 53; --soft: 107 101 133; --pop: 106 76 240;
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  --canvas: 21 18 31; --panel: 31 26 46; --panel2: 42 35 64; --rule: 52 44 77;
+  --ink: 241 238 250; --soft: 166 159 190; --pop: 160 140 255;
+  color-scheme: dark;
+}
+body { transition: background-color .3s, color .3s; }
+h1, h2, h3, .font-display { text-wrap: balance; }
+
+/* Botão 3D: sombra sólida embaixo; sobe no hover, afunda no clique. */
+@layer components {
+  .btn-3d {
+    --c: #6A4CF0; --s: #4B2FC9; --t: #fff;
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-black uppercase tracking-wider text-[15px];
+    color: var(--t); background: var(--c); box-shadow: 0 5px 0 var(--s);
+    transition: transform .09s ease-out, box-shadow .09s ease-out, filter .16s;
+    position: relative; overflow: hidden; isolation: isolate;
+  }
+  /* Onda do clique: uma faixa de brilho atravessa o botão da esquerda para a direita (classe .wave, ver button-wave.tsx). */
+  .btn-3d::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(105deg, transparent 32%, rgb(255 255 255 / .25) 42%, rgb(255 255 255 / .55) 50%, rgb(255 255 255 / .25) 58%, transparent 68%);
+    transform: translateX(-110%);
+  }
+  .btn-3d.wave::after { animation: btn-wave .6s cubic-bezier(.22,1,.36,1); }
+  @keyframes btn-wave { from { transform: translateX(-110%); } to { transform: translateX(110%); } }
+  .btn-3d:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 6px 0 var(--s); }
+  .btn-3d:active { transform: translateY(5px); box-shadow: 0 0 0 var(--s); }
+  .btn-3d:disabled { --c: rgb(var(--panel2)); --s: rgb(var(--panel2)); --t: rgb(var(--soft)); filter: none; transform: none; cursor: not-allowed; }
+  .btn-3d.sun { --c: #FFC83D; --s: #E0A100; --t: #221C35; }
+  .btn-3d.coral { --c: #D93A40; --s: #B02A30; }
+  .btn-3d.ghost { --c: rgb(var(--canvas)); --s: rgb(var(--rule)); --t: rgb(var(--pop)); box-shadow: 0 5px 0 var(--s), inset 0 0 0 2px rgb(var(--rule)); }
+
+  /* Cartão de resposta: borda e sombra sólidas; selecionado fica azul-céu. */
+  .answer-card {
+    @apply w-full rounded-2xl border-2 border-rule bg-canvas px-4 py-3.5 text-left font-extrabold text-ink;
+    box-shadow: 0 4px 0 rgb(var(--rule));
+    transition: transform .09s, box-shadow .09s, border-color .16s, background-color .16s;
+  }
+  .answer-card:hover { border-color: #4CC2FF; }
+  .answer-card:active { transform: translateY(3px); box-shadow: 0 1px 0 rgb(var(--rule)); }
+  .answer-card[aria-checked="true"] { border-color: #4CC2FF; background: color-mix(in srgb, #4CC2FF 14%, rgb(var(--canvas))); box-shadow: 0 4px 0 #1E96D8; }
+}
+
+@layer components {
+/*
+ * Cartões 3D: sombra sólida na cor do cartão (--sc). No hover o cartão sobe e a sombra cresce na mesma medida,
+ * então a "base" fica parada; no clique ele afunda. Curva suave na subida, rápida no clique.
+ * .lift-host no link dispara o efeito no cartão de dentro; um <a class="card-3d"> reage sozinho.
+ */
+.card-3d {
+  --sc: rgb(var(--rule));
+  box-shadow: 0 6px 0 var(--sc);
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s cubic-bezier(.22,1,.36,1);
+}
+@media (hover: hover) {
+  .lift-host:hover .card-3d, a.card-3d:hover { transform: translateY(-4px); box-shadow: 0 10px 0 var(--sc); }
+  .lift:hover { transform: translateY(-4px); }
+}
+.lift-host:active .card-3d, a.card-3d:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--sc); transition-duration: .12s; }
+/* Elementos soltos (insígnias, bolinha flutuante): sobem suave no hover, encolhem de leve no clique. */
+.lift { transition: transform .4s cubic-bezier(.22,1,.36,1); }
+.lift:active { transform: translateY(1px) scale(.97); transition-duration: .12s; }
+}
+
+/* Barra de progresso com brilho que atravessa ao avançar. */
+.progress-fill { transition: width .48s cubic-bezier(.34,1.56,.64,1); }
+.progress-fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.75) 50%, transparent 70%); transform: translateX(-100%); }
+.progress-shine .progress-fill::after { animation: shine .8s ease-out; }
+@keyframes shine { to { transform: translateX(100%); } }
+
+/* ---------- Ícones animados ---------- */
+.ico { overflow: visible; }
+.fl-o, .fl-m, .fl-c, .flame-all { transform-box: fill-box; transform-origin: 50% 100%; }
+.fl-o { animation: flO 1.5s ease-in-out infinite; }
+.fl-m { animation: flM 1.15s ease-in-out infinite -.4s; }
+.fl-c { animation: flC .9s ease-in-out infinite -.2s; }
+@keyframes flO { 0%,100% { transform: scale(1,1) skewX(0); } 25% { transform: scale(1.04,.95) skewX(-4deg); } 50% { transform: scale(.97,1.06) skewX(3deg); } 75% { transform: scale(1.02,.98) skewX(-1.5deg); } }
+@keyframes flM { 0%,100% { transform: scale(1,1) skewX(0); } 33% { transform: scale(.94,1.08) skewX(5deg); } 66% { transform: scale(1.05,.94) skewX(-4deg); } }
+@keyframes flC { 0%,100% { transform: scale(1) translateY(0); } 50% { transform: scale(.9,1.12) translateY(-1px); } }
+.ember { animation: ember 1.8s ease-out infinite; transform-box: fill-box; }
+.ember.e2 { animation-delay: .6s; } .ember.e3 { animation-delay: 1.2s; }
+@keyframes ember { 0% { opacity: 0; transform: translate(0,0) scale(1); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--ex), -26px) scale(.3); } }
+.fire .flame-all { animation: icoPop .7s cubic-bezier(.34,1.56,.64,1); }
+@keyframes icoPop { 0% { transform: scale(1); } 35% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.bolt-g { transform-box: fill-box; transform-origin: center; animation: hover 2.4s ease-in-out infinite; }
+@keyframes hover { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3px) rotate(-3deg); } }
+.ico-shine { animation: shineX 2.8s ease-in-out infinite; }
+@keyframes shineX { 0%, 55% { transform: translateX(-40px) skewX(-20deg); } 85%, 100% { transform: translateX(60px) skewX(-20deg); } }
+.fire .bolt-g { animation: zap .6s cubic-bezier(.22,1,.36,1); }
+@keyframes zap { 0% { transform: scale(1); } 15% { transform: scale(1.3) rotate(-8deg); } 30% { transform: scale(1.2) rotate(8deg); } 45% { transform: scale(1.25) rotate(-5deg); } 100% { transform: scale(1); } }
+.spark { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.fire .spark { animation: spark .5s ease-out; }
+@keyframes spark { 0% { opacity: 1; transform: scale(.2); } 100% { opacity: 0; transform: scale(1.4); } }
+.twinkle { transform-box: fill-box; transform-origin: center; animation: twinkle 2s ease-in-out infinite; }
+.twinkle.t2 { animation-delay: .7s; } .twinkle.t3 { animation-delay: 1.3s; }
+@keyframes twinkle { 0%, 100% { transform: scale(0) rotate(0); opacity: 0; } 40% { transform: scale(1) rotate(45deg); opacity: 1; } 70% { transform: scale(0) rotate(90deg); opacity: 0; } }
+.medal-g { transform-box: fill-box; transform-origin: 50% 0; animation: swing 3s ease-in-out infinite; }
+@keyframes swing { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.fire .medal-g { animation: spinY .8s cubic-bezier(.22,1,.36,1); }
+@keyframes spinY { from { transform: rotateY(0); } to { transform: rotateY(360deg); } }
+.cup-g { transform-box: fill-box; transform-origin: 50% 100%; animation: bob 2.6s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.fire .cup-g { animation: hop .7s cubic-bezier(.34,1.56,.64,1); }
+@keyframes hop { 0% { transform: translateY(0) scale(1); } 30% { transform: translateY(-12px) scale(1.08,.95); } 60% { transform: translateY(0) scale(1.06,.94); } 100% { transform: none; } }
+.wave { animation: wave 1.6s ease-in-out infinite; }
+.wave.w2 { animation-delay: .25s; }
+@keyframes wave { 0%, 100% { opacity: .25; } 40% { opacity: 1; } }
+.speaking .spk-g { animation: icoPop .5s cubic-bezier(.34,1.56,.64,1) infinite; transform-box: fill-box; transform-origin: center; }
+.chk { stroke-dasharray: 40; stroke-dashoffset: 0; }
+.fire .chk { animation: draw .5s cubic-bezier(.22,1,.36,1); }
+@keyframes draw { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -78,10 +200,10 @@
 }
 
 /* Estilização padrao para as outlines - acessibilidade */
-[tabindex]:focus {
+[tabindex]:focus, :focus-visible {
   outline-width: 3px;
   outline-style: solid;
-  outline-color: #3b82f6; /* Tailwind blue-500 */
+  outline-color: #7B61FF;
   outline-offset: 2px;
   border-radius: 0.25rem;  /* Tailwind rounded */
 }
