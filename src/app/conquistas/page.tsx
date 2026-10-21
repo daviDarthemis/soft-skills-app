@@ -17,7 +17,7 @@ export default function AchievementsPage() {
     <Shell>
       <h1 className="mb-4 font-display text-3xl font-bold">Conquistas</h1>
 
-      <section className="rounded-[28px] bg-brand-100 p-5 text-night shadow-[0_6px_0_#D5CCFF]">
+      <section className="rounded-[28px] bg-brand-100 p-5 text-night shadow-[0_6px_0_var(--color-blue-100)]">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-black uppercase tracking-wider text-brand-700">Nível atual</p>
@@ -26,18 +26,18 @@ export default function AchievementsPage() {
           <MedalIcon className="size-16" />
         </div>
         <div className="mt-3 flex items-center gap-3">
-          <ProgressBar value={xpInLevel} max={100} className="bg-white/70" />
+          <ProgressBar value={xpInLevel} max={100} className="bg-purple-50/70" />
           <span className="whitespace-nowrap text-sm font-black">{xpInLevel}/100 XP</span>
         </div>
       </section>
 
       <section className="mt-4 grid auto-rows-fr grid-cols-2 gap-3">
-        <div className="rounded-2xl border-2 border-rule p-4 shadow-[0_4px_0_rgb(var(--rule))]">
+        <div className="rounded-2xl border-2 border-rule p-4 shadow-[0_4px_0_var(--rule)]">
           <FlameIcon className="size-9" />
           <p className="mt-1 font-display text-3xl font-semibold">{state.streak.count}</p>
           <p className="text-xs font-bold text-soft">dias seguidos</p>
         </div>
-        <div className="rounded-2xl border-2 border-rule p-4 shadow-[0_4px_0_rgb(var(--rule))]">
+        <div className="rounded-2xl border-2 border-rule p-4 shadow-[0_4px_0_var(--rule)]">
           <BoltIcon className="size-9" />
           <p className="mt-1 font-display text-3xl font-semibold">{state.xp}</p>
           <p className="text-xs font-bold text-soft">XP total</p>
@@ -55,7 +55,7 @@ export default function AchievementsPage() {
               <div
                 className={cn(
                   "lift relative grid size-20 place-items-center rounded-full border-[5px] text-3xl",
-                  earned ? "border-sun bg-brand-100 shadow-[0_4px_0_#E0A100]" : "border-rule bg-panel opacity-60 grayscale",
+                  earned ? "border-sun bg-orange-50 shadow-[0_4px_0_var(--color-orange-700)]" : "border-rule bg-panel opacity-60 grayscale",
                 )}
               >
                 <span aria-hidden="true">{b.emoji}</span>

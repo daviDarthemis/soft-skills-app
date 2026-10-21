@@ -93,7 +93,7 @@ export default function PathPage() {
             aria-hidden={!bannerHidden}
             tabIndex={bannerHidden ? 0 : -1}
             className={cn(
-              "group fixed right-0 top-1/2 z-30 flex -translate-y-1/2 origin-right flex-col items-center gap-1 rounded-l-2xl border-2 border-r-0 border-rule bg-canvas py-2.5 pl-2 pr-1.5 shadow-[-4px_4px_0_rgb(var(--rule))] transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)]",
+              "group fixed right-0 top-1/2 z-30 flex -translate-y-1/2 origin-right flex-col items-center gap-1 rounded-l-2xl border-2 border-r-0 border-rule bg-canvas py-2.5 pl-2 pr-1.5 shadow-[-4px_4px_0_var(--rule)] transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)]",
               bannerHidden
                 ? "translate-x-0 opacity-100"
                 : "pointer-events-none scale-75 opacity-0",
@@ -102,7 +102,7 @@ export default function PathPage() {
             <span
               className="grid size-10 place-items-center rounded-full p-[3px]"
               style={{
-                background: `conic-gradient(#FFC83D ${(done / total) * 360}deg, rgb(var(--panel2)) 0)`,
+                background: `conic-gradient(var(--color-orange-500) ${(done / total) * 360}deg, var(--panel2) 0)`,
               }}
             >
               <span className="grid size-full place-items-center rounded-full bg-canvas">

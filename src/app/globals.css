@@ -51,18 +51,18 @@
   --color-purple-800: #81858a;
   --color-purple-900: #626569;
 
-  --color-brand-100: #efebff;
-  --color-brand-600: #6a4cf0;
-  --color-brand-700: #4b2fc9;
-  --color-brand: #7b61ff;
+  --color-brand-100: var(--color-blue-50);
+  --color-brand-600: var(--color-blue-500);
+  --color-brand-700: var(--color-blue-700);
+  --color-brand: var(--color-blue-500);
 
   --color-sea-100: #e2f5ff;
   --color-sea-700: #1e96d8;
   --color-sea: #4cc2ff;
 
-  --color-sun-100: #fff4d1;
-  --color-sun-700: #e0a100;
-  --color-sun: #ffc83d;
+  --color-sun-100: var(--color-orange-100);
+  --color-sun-700: var(--color-orange-700);
+  --color-sun: var(--color-orange-500);
 
   --color-coral-100: #ffe3e3;
   --color-coral-600: #d93a40;
@@ -73,14 +73,14 @@
   --color-mint-700: #1fa578;
   --color-mint: #34d399;
 
-  --color-night: #221c35;
-  --color-canvas: rgb(var(--canvas));
-  --color-panel: rgb(var(--panel));
-  --color-panel2: rgb(var(--panel2));
-  --color-rule: rgb(var(--rule));
-  --color-ink: rgb(var(--ink));
-  --color-soft: rgb(var(--soft));
-  --color-pop: rgb(var(--pop));
+  --color-night: var(--color-blue-900);
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel2);
+  --color-rule: var(--rule);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --color-pop: var(--pop);
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -185,10 +185,10 @@
   }
   @keyframes pulse-ring {
     0% {
-      box-shadow: 0 0 0 0 rgba(255, 200, 61, 0.65);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-orange-500) 65%, transparent);
     }
     100% {
-      box-shadow: 0 0 0 16px rgba(255, 200, 61, 0);
+      box-shadow: 0 0 0 16px color-mix(in srgb, var(--color-orange-500) 0%, transparent);
     }
   }
   @keyframes float {
@@ -277,9 +277,9 @@
 }
 
 @utility btn-3d {
-  --c: #6a4cf0;
-  --s: #4b2fc9;
-  --t: #fff;
+  --c: var(--color-blue-500);
+  --s: var(--color-blue-700);
+  --t: var(--color-purple-50);
   @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-black uppercase tracking-wider text-[15px];
   color: var(--t);
   background: var(--c);
@@ -318,27 +318,27 @@
     box-shadow: 0 0 0 var(--s);
   }
   &:disabled {
-    --c: rgb(var(--panel2));
-    --s: rgb(var(--panel2));
-    --t: rgb(var(--soft));
+    --c: var(--panel2);
+    --s: var(--panel2);
+    --t: var(--soft);
     filter: none;
     transform: none;
     cursor: not-allowed;
   }
   &.sun {
-    --c: #ffc83d;
-    --s: #e0a100;
-    --t: #221c35;
+    --c: var(--color-orange-500);
+    --s: var(--color-orange-700);
+    --t: var(--color-blue-900);
   }
   &.coral {
     --c: #d93a40;
     --s: #b02a30;
   }
   &.ghost {
-    --c: rgb(var(--canvas));
-    --s: rgb(var(--rule));
-    --t: rgb(var(--pop));
-    box-shadow: 0 5px 0 var(--s), inset 0 0 0 2px rgb(var(--rule));
+    --c: var(--canvas);
+    --s: var(--rule);
+    --t: var(--pop);
+    box-shadow: 0 5px 0 var(--s), inset 0 0 0 2px var(--rule);
   }
 }
 
@@ -350,9 +350,9 @@
 
 @utility sun {
   &.btn-3d {
-    --c: #ffc83d;
-    --s: #e0a100;
-    --t: #221c35;
+    --c: var(--color-orange-500);
+    --s: var(--color-orange-700);
+    --t: var(--color-blue-900);
   }
 }
 
@@ -365,30 +365,30 @@
 
 @utility ghost {
   &.btn-3d {
-    --c: rgb(var(--canvas));
-    --s: rgb(var(--rule));
-    --t: rgb(var(--pop));
-    box-shadow: 0 5px 0 var(--s), inset 0 0 0 2px rgb(var(--rule));
+    --c: var(--canvas);
+    --s: var(--rule);
+    --t: var(--pop);
+    box-shadow: 0 5px 0 var(--s), inset 0 0 0 2px var(--rule);
   }
 }
 
 @utility answer-card {
   /* Cartão de resposta: borda e sombra sólidas; selecionado fica azul-céu. */
   @apply w-full rounded-2xl border-2 border-rule bg-canvas px-4 py-3.5 text-left font-extrabold text-ink;
-  box-shadow: 0 4px 0 rgb(var(--rule));
+  box-shadow: 0 4px 0 var(--rule);
   transition: transform 0.09s, box-shadow 0.09s, border-color 0.16s,
     background-color 0.16s;
   &:hover {
-    border-color: #4cc2ff;
+    border-color: var(--color-orange-500);
   }
   &:active {
     transform: translateY(3px);
-    box-shadow: 0 1px 0 rgb(var(--rule));
+    box-shadow: 0 1px 0 var(--rule);
   }
   &[aria-checked="true"] {
-    border-color: #4cc2ff;
-    background: color-mix(in srgb, #4cc2ff 14%, rgb(var(--canvas)));
-    box-shadow: 0 4px 0 #1e96d8;
+    border-color: var(--color-orange-500);
+    background: color-mix(in srgb, var(--color-orange-500) 14%, var(--canvas));
+    box-shadow: 0 4px 0 var(--color-orange-700);
   }
 }
 
@@ -398,7 +398,7 @@
  * então a "base" fica parada; no clique ele afunda. Curva suave na subida, rápida no clique.
  * .lift-host no link dispara o efeito no cartão de dentro; um <a class="card-3d"> reage sozinho.
  */
-  --sc: rgb(var(--rule));
+  --sc: var(--rule);
   box-shadow: 0 6px 0 var(--sc);
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -523,23 +523,23 @@
   /* Tema do app: claro por padrão, escuro com data-theme="dark" no <html> (segue o sistema até o usuário escolher). */
   :root,
   [data-theme="light"] {
-    --canvas: 255 255 255;
-    --panel: 246 244 253;
-    --panel2: 236 232 250;
-    --rule: 228 223 244;
-    --ink: 34 28 53;
-    --soft: 107 101 133;
-    --pop: 106 76 240;
+    --canvas: var(--color-purple-50);
+    --panel: var(--color-purple-300);
+    --panel2: var(--color-purple-500);
+    --rule: var(--color-purple-600);
+    --ink: var(--color-blue-800);
+    --soft: var(--color-blue-300);
+    --pop: var(--color-blue-500);
     color-scheme: light;
   }
   [data-theme="dark"] {
-    --canvas: 21 18 31;
-    --panel: 31 26 46;
-    --panel2: 42 35 64;
-    --rule: 52 44 77;
-    --ink: 241 238 250;
-    --soft: 166 159 190;
-    --pop: 160 140 255;
+    --canvas: var(--color-blue-900);
+    --panel: var(--color-blue-800);
+    --panel2: var(--color-blue-700);
+    --rule: var(--color-blue-400);
+    --ink: var(--color-purple-50);
+    --soft: var(--color-blue-100);
+    --pop: var(--color-orange-400);
     color-scheme: dark;
   }
   h1,
@@ -1036,7 +1036,7 @@
 :focus-visible {
   outline-width: 3px;
   outline-style: solid;
-  outline-color: #7b61ff;
+  outline-color: var(--color-orange-500);
   outline-offset: 2px;
   border-radius: 0.25rem; /* Tailwind rounded */
 }

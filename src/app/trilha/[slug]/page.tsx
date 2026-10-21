@@ -67,7 +67,7 @@ export default function TrailPage() {
             href={trail.courseUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-between rounded-2xl border-2 border-rule px-4 py-3 font-extrabold text-ink shadow-[0_4px_0_rgb(var(--rule))] transition-colors hover:bg-panel"
+            className="flex items-center justify-between rounded-2xl border-2 border-rule px-4 py-3 font-extrabold text-ink shadow-[0_4px_0_var(--rule)] transition-colors hover:bg-panel"
           >
             Curso gratuito de Inteligência Emocional
             <ExternalLink className="size-4 text-pop" />

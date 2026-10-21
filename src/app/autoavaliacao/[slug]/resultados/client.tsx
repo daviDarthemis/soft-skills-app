@@ -245,7 +245,7 @@ export default function Client({
     );
 
     const profiles: Record<string, { title: string; color: string; desc: string }> = {
-      autoconhecimento: { title: "🦉 Sábio Interior", color: "text-purple-600", desc: "Você tem uma clareza incrível sobre suas próprias emoções e limites." },
+      autoconhecimento: { title: "🦉 Sábio Interior", color: "text-blue-500", desc: "Você tem uma clareza incrível sobre suas próprias emoções e limites." },
       autocontrole: { title: "🛡️ Fortaleza Emocional", color: "text-blue-600", desc: "Você gerencia a pressão e os impulsos com maestria nas situações difíceis." },
       automotivacao: { title: "🔥 Motor de Iniciativa", color: "text-orange-600", desc: "Seu otimismo e foco são inabaláveis diante de qualquer obstáculo." },
       empatia: { title: "❤️ Coração Empático", color: "text-rose-600", desc: "Você compreende e acolhe as emoções alheias com extrema sensibilidade." },
@@ -257,7 +257,7 @@ export default function Client({
 // Quiz 1: Criatividade
   const getCreativityProfile = () => {
     const percentage = (points / quiz.questions.length) * 100;
-    if (percentage >= 80) return { title: "🚀 Mente Visionária", color: "text-purple-600", desc: "Você tem uma capacidade excepcional de gerar ideias inovadoras e pensar fora da caixa." };
+    if (percentage >= 80) return { title: "🚀 Mente Visionária", color: "text-blue-500", desc: "Você tem uma capacidade excepcional de gerar ideias inovadoras e pensar fora da caixa." };
     if (percentage >= 50) return { title: "💡 Pensador Criativo", color: "text-blue-600", desc: "Você tem ótimas ideias e consegue encontrar soluções originais para os desafios do dia a dia." };
     return { title: "🛠️ Solucionador Prático", color: "text-emerald-600", desc: "Sua abordagem é mais focada na execução prática e na aplicação de métodos eficientes." };
   };
@@ -277,7 +277,7 @@ export default function Client({
       (motivationFactors[a as keyof MotivationFactors] || 0) > (motivationFactors[b as keyof MotivationFactors] || 0) ? a : b
     );
     const profiles: Record<string, { title: string; color: string; desc: string }> = {
-      rp: { title: "🚀 Especialista Independente", color: "text-purple-600", desc: "Você é movido pelo desenvolvimento intelectual e autonomia." },
+      rp: { title: "🚀 Especialista Independente", color: "text-blue-500", desc: "Você é movido pelo desenvolvimento intelectual e autonomia." },
       hb: { title: "🧘 Mestre da Harmonia", color: "text-emerald-600", desc: "O equilíbrio entre vida pessoal e bem-estar é sua maior força." },
       rs: { title: "🤝 Agente de Impacto", color: "text-blue-600", desc: "Colaborar e ajudar o próximo são essenciais para o seu sucesso." },
       e:  { title: "🛡️ Guardião da Estabilidade", color: "text-amber-600", desc: "Você constrói bases sólidas e valoriza a segurança no futuro." },
@@ -335,7 +335,7 @@ export default function Client({
         <section className={cn("relative overflow-hidden rounded-[28px] px-5 py-6 text-center text-night", style.card, style.shadow)}>
           <div className="absolute -right-10 -top-10 size-40 rounded-full bg-white/40" aria-hidden="true" />
           <p className={cn("relative text-xs font-black uppercase tracking-widest", style.strong)}>{profile.heading}</p>
-          <div className="relative mx-auto my-4 grid size-24 place-items-center rounded-full border-[6px] border-sun bg-white text-5xl shadow-[0_6px_0_#E0A100]" aria-hidden="true">
+          <div className="relative mx-auto my-4 grid size-24 place-items-center rounded-full border-[6px] border-sun bg-purple-50 text-5xl shadow-[0_6px_0_var(--color-orange-700)]" aria-hidden="true">
             {profileEmoji}
           </div>
           <h2 className="relative font-display text-3xl font-bold leading-tight">{profileWords.join(" ")}</h2>
@@ -347,7 +347,7 @@ export default function Client({
         <section className="mt-8" aria-label={`Sua pontuação: ${points} de ${total}`}>
           <h2 className="mb-4 font-display text-xl font-semibold">Sua pontuação</h2>
           <div className="flex items-center gap-5 rounded-2xl border-2 border-rule p-5">
-            <div className="relative grid size-24 shrink-0 place-items-center rounded-full" style={{ background: `conic-gradient(#7B61FF ${(points / total) * 360}deg, rgb(var(--panel2)) 0)` }}>
+            <div className="relative grid size-24 shrink-0 place-items-center rounded-full" style={{ background: `conic-gradient(var(--color-orange-500) ${(points / total) * 360}deg, var(--panel2) 0)` }}>
               <span className="grid size-[76px] place-items-center rounded-full bg-canvas font-display text-2xl font-bold tabular-nums">
                 {points}
                 <span className="text-sm text-soft">/{total}</span>

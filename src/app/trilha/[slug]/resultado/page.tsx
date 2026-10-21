@@ -56,7 +56,7 @@ export default function ResultPage() {
         <div className="absolute -right-10 -top-10 size-40 rounded-full bg-white/40" aria-hidden="true" />
         <p className={cn("text-xs font-black uppercase tracking-widest", style.strong)}>{result.heading}</p>
         <div className={cn("relative mx-auto my-4 grid size-28 place-items-center", celebrate && "fire")} aria-hidden="true">
-          <span className="absolute inset-0 animate-pop rounded-full border-[6px] border-sun bg-white shadow-[0_6px_0_#E0A100]" />
+          <span className="absolute inset-0 animate-pop rounded-full border-[6px] border-sun bg-purple-50 shadow-[0_6px_0_var(--color-orange-700)]" />
           <span className="relative text-6xl">{result.emoji}</span>
         </div>
         <h1 className="animate-fade-up font-display text-3xl font-bold leading-tight">{result.title}</h1>

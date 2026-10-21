@@ -39,7 +39,7 @@ export function Celebration({ kind, emoji, level, eyebrow, title, subtitle, xp, 
           {/* Raios de sol girando atrás da insígnia */}
           <div
             className="absolute inset-0 animate-[cel-rays_9s_linear_infinite] rounded-full opacity-0 [animation-delay:.6s] mask-[radial-gradient(circle,#000_35%,transparent_70%)]"
-            style={{ background: "repeating-conic-gradient(#FFC83D 0 10deg, transparent 10deg 30deg)" }}
+            style={{ background: "repeating-conic-gradient(var(--color-orange-500) 0 10deg, transparent 10deg 30deg)" }}
             aria-hidden="true"
           />
           {/* Estrelas que estouram no pouso */}
@@ -57,7 +57,7 @@ export function Celebration({ kind, emoji, level, eyebrow, title, subtitle, xp, 
             </svg>
           ))}
           {/* A insígnia: cai girando, quica e ganha um brilho que atravessa */}
-          <div className="relative grid size-40 animate-[cel-drop_1.05s_cubic-bezier(.3,.7,.4,1)_both] place-items-center overflow-hidden rounded-full border-8 border-sun bg-white shadow-[0_10px_0_#E0A100]">
+          <div className="relative grid size-40 animate-[cel-drop_1.05s_cubic-bezier(.3,.7,.4,1)_both] place-items-center overflow-hidden rounded-full border-8 border-sun bg-purple-50 shadow-[0_10px_0_var(--color-orange-700)]">
             {kind === "trail" ? (
               <span className="text-7xl" aria-hidden="true">
                 {emoji}

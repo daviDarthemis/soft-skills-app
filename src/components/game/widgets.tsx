@@ -21,7 +21,7 @@ export function DailyGoal() {
   const done = count >= DAILY_GOAL;
   return (
     <section className={cn(panel, "flex items-center gap-4")} aria-label={`Meta do dia: ${Math.min(count, DAILY_GOAL)} de ${DAILY_GOAL} situações`}>
-      <div className="relative grid size-16 shrink-0 place-items-center rounded-full" style={{ background: `conic-gradient(#FFC83D ${pct * 360}deg, rgb(var(--panel2)) 0)` }}>
+      <div className="relative grid size-16 shrink-0 place-items-center rounded-full" style={{ background: `conic-gradient(var(--color-orange-500) ${pct * 360}deg, var(--panel2) 0)` }}>
         <span className="grid size-12 place-items-center rounded-full bg-canvas font-display text-lg font-semibold">
           {done ? <CheckIcon className="size-9" /> : `${count}/${DAILY_GOAL}`}
         </span>
@@ -169,10 +169,10 @@ export function ContinueHero() {
 
   if (!trail) {
     return (
-      <section className="card-3d flex items-center gap-4 rounded-[28px] bg-brand p-5 text-white [--sc:#4B2FC9]">
+      <section className="card-3d flex items-center gap-4 rounded-[28px] bg-brand p-5 text-purple-50 [--sc:var(--color-brand-700)]">
         <MedalIcon className="size-14 shrink-0" />
         <div>
-          <p className="text-xs font-black uppercase tracking-wider text-white/80">Todas as trilhas concluídas</p>
+          <p className="text-xs font-black uppercase tracking-wider text-purple-50/80">Todas as trilhas concluídas</p>
           <p className="font-display text-2xl font-semibold leading-tight">Você explorou todas as soft skills!</p>
         </div>
       </section>
@@ -184,22 +184,22 @@ export function ContinueHero() {
   const total = trail.questions.length;
   return (
     <Link href={`/trilha/${trail.slug}/desafio`} className="lift-host group block rounded-[28px]">
-      <section className="card-3d relative flex items-center gap-4 overflow-hidden rounded-[28px] bg-brand p-5 text-white [--sc:#4B2FC9] sm:gap-6 sm:p-6">
-        <span className="absolute -right-8 -top-10 size-40 rounded-full bg-white/10" aria-hidden="true" />
+      <section className="card-3d relative flex items-center gap-4 overflow-hidden rounded-[28px] bg-brand p-5 text-purple-50 [--sc:var(--color-brand-700)] sm:gap-6 sm:p-6">
+        <span className="absolute -right-8 -top-10 size-40 rounded-full bg-purple-50/10" aria-hidden="true" />
         <span className={cn("relative grid size-16 shrink-0 place-items-center rounded-2xl sm:size-20", TRAIL_STYLE[trail.color].card)}>
           <TrailEmblem slug={trail.slug} className="size-11 transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-rotate-6 group-hover:scale-110 sm:size-14" />
         </span>
         <div className="relative min-w-0 flex-1">
-          <p className="text-xs font-black uppercase tracking-wider text-white/80">{inProgress ? "Continue de onde parou" : started ? "Próxima trilha" : "Comece por aqui"}</p>
+          <p className="text-xs font-black uppercase tracking-wider text-orange-300">{inProgress ? "Continue de onde parou" : started ? "Próxima trilha" : "Comece por aqui"}</p>
           <p className="truncate font-display text-2xl font-semibold leading-tight">{trail.title}</p>
           <div className="mt-2 flex items-center gap-3">
-            <ProgressBar value={done} max={total} className="h-3 bg-white/25" />
+            <ProgressBar value={done} max={total} className="h-3 bg-purple-50/25" />
             <span className="whitespace-nowrap font-display font-semibold tabular-nums">
               {done}/{total}
             </span>
           </div>
         </div>
-        <span className="relative hidden size-12 shrink-0 place-items-center rounded-full bg-white text-brand shadow-[0_4px_0_#4B2FC9] transition-transform duration-300 group-hover:scale-110 sm:grid">
+        <span className="relative hidden size-12 shrink-0 place-items-center rounded-full bg-purple-50 text-orange-500 shadow-[0_4px_0_var(--color-brand-700)] transition-transform duration-300 group-hover:scale-110 sm:grid">
           <Play className="size-6 translate-x-0.5 fill-current" />
         </span>
       </section>

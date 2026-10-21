@@ -243,7 +243,7 @@ export default function ChallengePage() {
       {/* Rodapé: confirmar, depois o painel de feedback sobe */}
       <footer className="fixed inset-x-0 bottom-0 z-30 pb-[env(safe-area-inset-bottom)]">
         {feedback ? (
-          <div className="animate-slide-up border-t-2 border-brand/30 bg-brand-100 text-brand-700 dark:bg-[#2A2348] dark:text-[#C9BEFF]">
+          <div className="animate-slide-up border-t-2 border-brand/30 bg-brand-100 text-brand-700 dark:bg-blue-800 dark:text-blue-100">
             <div className="mx-auto max-w-xl px-4 pb-6 pt-4 sm:px-6 lg:flex lg:max-w-5xl lg:items-center lg:justify-between lg:gap-8 lg:py-6">
               <div className="mb-4 flex items-center gap-3 lg:mb-0">
                 <span className="fire grid size-14 shrink-0 place-items-center">

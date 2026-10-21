@@ -50,7 +50,7 @@ export function ConfirmDialog({ open, icon, title, description, confirmLabel, ca
         aria-labelledby="confirm-title"
         aria-describedby={description ? "confirm-desc" : undefined}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-sm animate-pop rounded-[28px] border-2 border-rule bg-canvas p-6 text-center text-ink shadow-[0_8px_0_rgb(var(--rule))]"
+        className="w-full max-w-sm animate-pop rounded-[28px] border-2 border-rule bg-canvas p-6 text-center text-ink shadow-[0_8px_0_var(--rule)]"
       >
         {icon && (
           <div className={cn("mx-auto mb-4 grid size-16 place-items-center rounded-full", tone === "danger" ? "bg-coral-100 text-coral-600" : "bg-brand-100 text-brand-700")}>
