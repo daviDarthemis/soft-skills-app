@@ -1,6 +1,10 @@
 "use client";
 import { useId } from "react";
 import { cn } from "@/lib/utils";
+import BrainMascot from "./animation/brain-mascot";
+import LeaderMascot from "./animation/leader-mascot";
+import MountainClimberMascot from "./animation/motivation-mascot";
+import LightbulbMascot from "./animation/lightbulb-mascot";
 
 // Ícones ilustrados e animados da identidade visual (animações em globals.css).
 // Cada um tem um movimento em repouso; com a classe "fire" no pai, faz a reação de conquista.
@@ -9,7 +13,11 @@ type IconProps = { className?: string };
 const star4 = (x: number, y: number, s: number, fill: string, cls = "") => (
   <path
     className={cn("twinkle", cls)}
-    d={`M${x} ${y - s} Q${x + s * 0.2} ${y - s * 0.2} ${x + s} ${y} Q${x + s * 0.2} ${y + s * 0.2} ${x} ${y + s} Q${x - s * 0.2} ${y + s * 0.2} ${x - s} ${y} Q${x - s * 0.2} ${y - s * 0.2} ${x} ${y - s}Z`}
+    d={`M${x} ${y - s} Q${x + s * 0.2} ${y - s * 0.2} ${x + s} ${y} Q${
+      x + s * 0.2
+    } ${y + s * 0.2} ${x} ${y + s} Q${x - s * 0.2} ${y + s * 0.2} ${
+      x - s
+    } ${y} Q${x - s * 0.2} ${y - s * 0.2} ${x} ${y - s}Z`}
     fill={fill}
   />
 );
@@ -17,7 +25,11 @@ const star4 = (x: number, y: number, s: number, fill: string, cls = "") => (
 export function FlameIcon({ className }: IconProps) {
   const g = useId();
   return (
-    <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
+    <svg
+      className={cn("ico", className)}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
       <defs>
         <linearGradient id={g} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#FFB23D" />
@@ -25,14 +37,55 @@ export function FlameIcon({ className }: IconProps) {
         </linearGradient>
       </defs>
       <g className="flame-all">
-        <path className="fl-o" d="M32 4 C38 16 52 24 52 40 A20 20 0 0 1 12 40 C12 30 18 24 22 16 C24 22 27 25 30 25 C30 18 29 11 32 4Z" fill={`url(#${g})`} />
-        <path className="fl-m" d="M32 22 C36 30 44 34 44 44 A12 12 0 0 1 20 44 C20 37 25 33 27 28 C29 31 30 32 31 32 C31 28 31 25 32 22Z" fill="#FFC83D" />
-        <path className="fl-c" d="M32 36 C34 40 38 42 38 47 A6 6 0 0 1 26 47 C26 43 30 40 32 36Z" fill="#FFF3C4" />
-        <ellipse cx="22" cy="34" rx="2.5" ry="6" fill="#fff" opacity=".35" transform="rotate(20 22 34)" />
+        <path
+          className="fl-o"
+          d="M32 4 C38 16 52 24 52 40 A20 20 0 0 1 12 40 C12 30 18 24 22 16 C24 22 27 25 30 25 C30 18 29 11 32 4Z"
+          fill={`url(#${g})`}
+        />
+        <path
+          className="fl-m"
+          d="M32 22 C36 30 44 34 44 44 A12 12 0 0 1 20 44 C20 37 25 33 27 28 C29 31 30 32 31 32 C31 28 31 25 32 22Z"
+          fill="#FFC83D"
+        />
+        <path
+          className="fl-c"
+          d="M32 36 C34 40 38 42 38 47 A6 6 0 0 1 26 47 C26 43 30 40 32 36Z"
+          fill="#FFF3C4"
+        />
+        <ellipse
+          cx="22"
+          cy="34"
+          rx="2.5"
+          ry="6"
+          fill="#fff"
+          opacity=".35"
+          transform="rotate(20 22 34)"
+        />
       </g>
-      <circle className="ember" style={{ ["--ex" as string]: "-6px" }} cx="26" cy="22" r="1.8" fill="#FFC83D" />
-      <circle className="ember e2" style={{ ["--ex" as string]: "5px" }} cx="36" cy="18" r="1.5" fill="#FF8A3D" />
-      <circle className="ember e3" style={{ ["--ex" as string]: "-2px" }} cx="32" cy="14" r="1.3" fill="#FFC83D" />
+      <circle
+        className="ember"
+        style={{ ["--ex" as string]: "-6px" }}
+        cx="26"
+        cy="22"
+        r="1.8"
+        fill="#FFC83D"
+      />
+      <circle
+        className="ember e2"
+        style={{ ["--ex" as string]: "5px" }}
+        cx="36"
+        cy="18"
+        r="1.5"
+        fill="#FF8A3D"
+      />
+      <circle
+        className="ember e3"
+        style={{ ["--ex" as string]: "-2px" }}
+        cx="32"
+        cy="14"
+        r="1.3"
+        fill="#FFC83D"
+      />
     </svg>
   );
 }
@@ -42,7 +95,11 @@ export function BoltIcon({ className }: IconProps) {
   const c = useId();
   const d = "M37 4 L12 36 H29 L25 60 L52 26 H35 L41 4Z";
   return (
-    <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
+    <svg
+      className={cn("ico", className)}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
       <defs>
         <linearGradient id={g} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#FFE07A" />
@@ -53,25 +110,59 @@ export function BoltIcon({ className }: IconProps) {
         </clipPath>
       </defs>
       <g className="bolt-g">
-        <path d={d} fill={`url(#${g})`} stroke="#E0A100" strokeWidth="3" strokeLinejoin="round" />
+        <path
+          d={d}
+          fill={`url(#${g})`}
+          stroke="#E0A100"
+          strokeWidth="3"
+          strokeLinejoin="round"
+        />
         <g clipPath={`url(#${c})`}>
-          <rect className="ico-shine" x="10" y="0" width="9" height="64" fill="#fff" opacity=".7" />
+          <rect
+            className="ico-shine"
+            x="10"
+            y="0"
+            width="9"
+            height="64"
+            fill="#fff"
+            opacity=".7"
+          />
         </g>
       </g>
-      <path className="spark" d="M8 18 L2 14 M56 46 L62 50 M54 12 L60 6 M10 50 L4 56" stroke="#FFC83D" strokeWidth="3.5" strokeLinecap="round" />
+      <path
+        className="spark"
+        d="M8 18 L2 14 M56 46 L62 50 M54 12 L60 6 M10 50 L4 56"
+        stroke="#FFC83D"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 export function MedalIcon({ className }: IconProps) {
   return (
-    <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
+    <svg
+      className={cn("ico", className)}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
       <g className="medal-g">
         <path d="M18 2h12l6 18H24z" fill="#5B43D6" />
         <path d="M46 2H34l-6 18h12z" fill="#7B61FF" />
-        <circle cx="32" cy="40" r="17" fill="#FFC83D" stroke="#E0A100" strokeWidth="3.5" />
+        <circle
+          cx="32"
+          cy="40"
+          r="17"
+          fill="#FFC83D"
+          stroke="#E0A100"
+          strokeWidth="3.5"
+        />
         <circle cx="32" cy="40" r="11" fill="#FFE07A" />
-        <path d="m32 31.5 2.7 5.4 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6-4.4-4.2 6-.9z" fill="#E0A100" />
+        <path
+          d="m32 31.5 2.7 5.4 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6-4.4-4.2 6-.9z"
+          fill="#E0A100"
+        />
       </g>
       {star4(52, 24, 6, "#FFC83D")}
       {star4(10, 34, 4.5, "#A08CFF", "t2")}
@@ -83,17 +174,35 @@ export function MedalIcon({ className }: IconProps) {
 export function TrophyIcon({ className }: IconProps) {
   const c = useId();
   return (
-    <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
+    <svg
+      className={cn("ico", className)}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
       <defs>
         <clipPath id={c}>
           <path d="M17 6h30v18a15 15 0 0 1-30 0z" />
         </clipPath>
       </defs>
       <g className="cup-g">
-        <path d="M17 11H8v5a10 10 0 0 0 10 10M47 11h9v5a10 10 0 0 1-10 10" stroke="#E0A100" strokeWidth="4.5" fill="none" strokeLinecap="round" />
+        <path
+          d="M17 11H8v5a10 10 0 0 0 10 10M47 11h9v5a10 10 0 0 1-10 10"
+          stroke="#E0A100"
+          strokeWidth="4.5"
+          fill="none"
+          strokeLinecap="round"
+        />
         <path d="M17 6h30v18a15 15 0 0 1-30 0z" fill="#FFC83D" />
         <g clipPath={`url(#${c})`}>
-          <rect className="ico-shine" x="10" y="0" width="8" height="64" fill="#fff" opacity=".6" />
+          <rect
+            className="ico-shine"
+            x="10"
+            y="0"
+            width="8"
+            height="64"
+            fill="#fff"
+            opacity=".6"
+          />
         </g>
         <path d="M27 38h10v9H27z" fill="#E0A100" />
         <rect x="18" y="47" width="28" height="10" rx="4" fill="#7B61FF" />
@@ -106,12 +215,39 @@ export function TrophyIcon({ className }: IconProps) {
 
 export function SoundIcon({ className }: IconProps) {
   return (
-    <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
+    <svg
+      className={cn("ico", className)}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
       <g className="spk-g">
-        <path d="M8 24h10l16-13v42L18 40H8a3 3 0 0 1-3-3V27a3 3 0 0 1 3-3z" fill="#4CC2FF" />
-        <path d="M12 29h6" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" opacity=".6" />
-        <path className="wave" d="M42 22a14 14 0 0 1 0 20" stroke="#4CC2FF" strokeWidth="5" fill="none" strokeLinecap="round" />
-        <path className="wave w2" d="M49 14a25 25 0 0 1 0 36" stroke="#4CC2FF" strokeWidth="5" fill="none" strokeLinecap="round" />
+        <path
+          d="M8 24h10l16-13v42L18 40H8a3 3 0 0 1-3-3V27a3 3 0 0 1 3-3z"
+          fill="#4CC2FF"
+        />
+        <path
+          d="M12 29h6"
+          stroke="#fff"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          opacity=".6"
+        />
+        <path
+          className="wave"
+          d="M42 22a14 14 0 0 1 0 20"
+          stroke="#4CC2FF"
+          strokeWidth="5"
+          fill="none"
+          strokeLinecap="round"
+        />
+        <path
+          className="wave w2"
+          d="M49 14a25 25 0 0 1 0 36"
+          stroke="#4CC2FF"
+          strokeWidth="5"
+          fill="none"
+          strokeLinecap="round"
+        />
       </g>
     </svg>
   );
@@ -119,10 +255,25 @@ export function SoundIcon({ className }: IconProps) {
 
 export function CheckIcon({ className }: IconProps) {
   return (
-    <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
+    <svg
+      className={cn("ico", className)}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+    >
       <circle cx="32" cy="32" r="24" fill="#34D399" />
-      <path d="M32 56a24 24 0 0 1-24-24c0-1.7.2-3.3.5-4.9C10.7 38 20 46 32 46s21.3-8 23.5-18.9c.3 1.6.5 3.2.5 4.9a24 24 0 0 1-24 24z" fill="#1FA578" />
-      <path className="chk" d="M20 32l8 8 16-17" stroke="#fff" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M32 56a24 24 0 0 1-24-24c0-1.7.2-3.3.5-4.9C10.7 38 20 46 32 46s21.3-8 23.5-18.9c.3 1.6.5 3.2.5 4.9a24 24 0 0 1-24 24z"
+        fill="#1FA578"
+      />
+      <path
+        className="chk"
+        d="M20 32l8 8 16-17"
+        stroke="#fff"
+        strokeWidth="6"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -131,8 +282,18 @@ export function CheckIcon({ className }: IconProps) {
 export function HomeNavIcon({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 48 48" aria-hidden="true">
-      <path d="M6 22 24 6l18 16v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z" fill="#7B61FF" />
-      <path d="M3 23 24 5l21 18" stroke="#4B2FC9" strokeWidth="4.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M6 22 24 6l18 16v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z"
+        fill="#7B61FF"
+      />
+      <path
+        d="M3 23 24 5l21 18"
+        stroke="#4B2FC9"
+        strokeWidth="4.5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path d="M19 43V31a5 5 0 0 1 10 0v12z" fill="#FFC83D" />
     </svg>
   );
@@ -141,7 +302,13 @@ export function HomeNavIcon({ className }: IconProps) {
 export function TrophyNavIcon({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 48 48" aria-hidden="true">
-      <path d="M12 8H5v5a8 8 0 0 0 8 8M36 8h7v5a8 8 0 0 1-8 8" stroke="#E0A100" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+      <path
+        d="M12 8H5v5a8 8 0 0 0 8 8M36 8h7v5a8 8 0 0 1-8 8"
+        stroke="#E0A100"
+        strokeWidth="3.5"
+        fill="none"
+        strokeLinecap="round"
+      />
       <path d="M12 4h24v14a12 12 0 0 1-24 0z" fill="#FFC83D" />
       <path d="M20 30h8v7h-8z" fill="#E0A100" />
       <rect x="13" y="37" width="22" height="7" rx="3" fill="#7B61FF" />
@@ -160,33 +327,18 @@ export function InfoNavIcon({ className }: IconProps) {
 }
 
 // Emblemas das trilhas (no lugar das ilustrações antigas).
-export function TrailEmblem({ slug, className }: { slug: string; className?: string }) {
+export function TrailEmblem({
+  slug,
+  className,
+}: {
+  slug: string;
+  className?: string;
+}) {
   if (slug === "inteligencia-emocional")
-    return (
-      <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M32 56 C14 44 6 34 6 22 A13 13 0 0 1 32 16 A13 13 0 0 1 58 22 C58 34 50 44 32 56Z" fill="#FF6B6B" />
-        <path d="M14 22a8 8 0 0 1 8-8" stroke="#fff" strokeWidth="4" fill="none" strokeLinecap="round" opacity=".6" />
-        {star4(54, 10, 5, "#FFC83D")}
-      </svg>
-    );
+    return <BrainMascot className={className} />;
   if (slug === "estilos-de-lideranca")
-    return (
-      <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
-        <circle cx="32" cy="32" r="26" fill="#4CC2FF" />
-        <circle cx="32" cy="32" r="19" fill="#E2F5FF" />
-        <path d="M32 14 L38 32 L32 50 L26 32Z" fill="#1E96D8" />
-        <path d="M32 14 L38 32 L26 32Z" fill="#FF6B6B" />
-        <circle cx="32" cy="32" r="3.5" fill="#fff" />
-      </svg>
-    );
-  if (slug === "motivacao-no-trabalho") return <FlameIcon className={className} />;
-  return (
-    <svg className={cn("ico", className)} viewBox="0 0 64 64" aria-hidden="true">
-      <path d="M32 6a18 18 0 0 0-10 33v7h20v-7A18 18 0 0 0 32 6z" fill="#FFC83D" />
-      <rect x="22" y="47" width="20" height="5" rx="2.5" fill="#1FA578" />
-      <rect x="25" y="54" width="14" height="5" rx="2.5" fill="#34D399" />
-      <path d="M24 22a9 9 0 0 1 8-8" stroke="#fff" strokeWidth="4" fill="none" strokeLinecap="round" opacity=".7" />
-      {star4(54, 12, 5, "#34D399", "t2")}
-    </svg>
-  );
+    return <LeaderMascot className={className} />;
+  if (slug === "motivacao-no-trabalho")
+    return <MountainClimberMascot className={className} />;
+  return <LightbulbMascot className={className} />;
 }

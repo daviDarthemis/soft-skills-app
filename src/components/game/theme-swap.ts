@@ -41,7 +41,7 @@ export function playThemeSwap(origin: { x: number; y: number }, next: Theme, app
   disc.dataset.theme = next; // pega as variáveis do tema novo: bg-canvas já é a cor certa
   disc.setAttribute("data-theme-disc", "");
   disc.setAttribute("aria-hidden", "true");
-  disc.className = "pointer-events-none fixed z-[100] rounded-full bg-canvas";
+  disc.className = "pointer-events-none fixed z-100 rounded-full bg-canvas";
   Object.assign(disc.style, {
     left: `${x - radius}px`, top: `${y - radius}px`, width: `${radius * 2}px`, height: `${radius * 2}px`,
     transform: "scale(0)", willChange: "transform, opacity",
@@ -50,7 +50,7 @@ export function playThemeSwap(origin: { x: number; y: number }, next: Theme, app
   // Céu: o arco gira em torno de um ponto abaixo do centro, então o astro desce/sobe em curva.
   const sky = document.createElement("div");
   sky.setAttribute("aria-hidden", "true");
-  sky.className = "pointer-events-none fixed inset-0 z-[101] opacity-0";
+  sky.className = "pointer-events-none fixed inset-0 z-101 opacity-0";
   const orbit = (svg: string) =>
     `<div class="orbit" style="position:absolute;left:50%;top:42%;width:0;height:0;transform-origin:0 240px;will-change:transform,opacity">
        <div style="position:absolute;transform:translate(-50%,-50%)">${svg}</div></div>`;

@@ -19,10 +19,16 @@ export default function Home() {
   return (
     <Shell>
       <header className="mb-6">
-        <p className="text-xs font-black uppercase tracking-[.12em] text-pop">Soft Skills Academy</p>
-        <h1 className="mt-1 font-display text-3xl font-bold leading-tight lg:text-4xl">{started ? "Bora continuar?" : "Escolha uma trilha"}</h1>
+        <p className="text-xs font-black uppercase tracking-[.12em] text-pop">
+          Soft Skills Academy
+        </p>
+        <h1 className="mt-1 font-display text-3xl font-bold leading-tight lg:text-4xl">
+          {started ? "Bora continuar?" : "Escolha uma trilha"}
+        </h1>
         <p className="mt-1 font-semibold text-soft">
-          {started ? "Seu progresso fica salvo. Volte de onde parou." : "Cada trilha tem situações do dia a dia. Não existe resposta errada."}
+          {started
+            ? "Seu progresso fica salvo. Volte de onde parou."
+            : "Cada trilha tem situações do dia a dia. Não existe resposta errada."}
         </p>
       </header>
 
@@ -42,12 +48,21 @@ export default function Home() {
       </div>
 
       <section aria-labelledby="como" className="mt-10">
-        <h2 id="como" className="mb-4 font-display text-xl font-semibold">Como funciona</h2>
+        <h2 id="como" className="mb-4 font-display text-xl font-semibold">
+          Como funciona
+        </h2>
         <ol className="grid auto-rows-fr gap-3 sm:grid-cols-3">
           {STEPS.map((s, i) => (
-            <li key={s.title} className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-x-3 rounded-2xl bg-panel p-4 sm:flex sm:flex-col sm:items-start sm:gap-2">
-              <span className="row-span-2 grid size-9 place-items-center rounded-full bg-brand font-display font-semibold text-white shadow-[0_3px_0_#4B2FC9]">{i + 1}</span>
-              <p className="font-display text-lg font-semibold leading-tight">{s.title}</p>
+            <li
+              key={s.title}
+              className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-x-3 rounded-2xl bg-panel p-4 sm:flex sm:flex-col sm:items-start sm:gap-2"
+            >
+              <span className="row-span-2 grid size-9 place-items-center rounded-full bg-brand font-display font-semibold text-purple-50 shadow-[0_3px_0_var(--color-brand-700)]">
+                {i + 1}
+              </span>
+              <p className="font-display text-lg font-semibold leading-tight">
+                {s.title}
+              </p>
               <p className="text-sm font-semibold text-soft">{s.text}</p>
             </li>
           ))}

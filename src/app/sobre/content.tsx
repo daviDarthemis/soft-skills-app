@@ -37,8 +37,8 @@ export default function AboutContent() {
         <h2 id="como" className="mb-4 font-display text-xl font-semibold">Como funciona</h2>
         <ol className="grid auto-rows-fr gap-3">
           {STEPS.map((s, i) => (
-            <li key={s.title} className="grid animate-fade-up grid-cols-[2.5rem_minmax(0,1fr)] items-start gap-x-4 rounded-2xl border-2 border-rule px-5 py-4 shadow-[0_4px_0_rgb(var(--rule))] min-h-[112px]" style={{ animationDelay: `${i * 70}ms` }}>
-              <span className="grid size-10 place-items-center rounded-full bg-brand font-display text-lg font-semibold text-white shadow-[0_3px_0_#4B2FC9]">{i + 1}</span>
+            <li key={s.title} className="grid animate-fade-up grid-cols-[2.5rem_minmax(0,1fr)] items-start gap-x-4 rounded-2xl border-2 border-rule px-5 py-4 shadow-[0_4px_0_var(--rule)] min-h-[112px]" style={{ animationDelay: `${i * 70}ms` }}>
+              <span className="grid size-10 place-items-center rounded-full bg-brand font-display text-lg font-semibold text-purple-50 shadow-[0_3px_0_var(--color-brand-700)]">{i + 1}</span>
               <div className="min-w-0 pt-0.5">
                 <h3 className="font-display text-lg font-semibold">{s.title}</h3>
                 <p className="line-clamp-3 text-sm font-semibold text-soft">{s.text}</p>

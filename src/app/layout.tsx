@@ -5,7 +5,11 @@ import { GameProvider } from "@/game/store";
 import { ButtonWave } from "@/components/game/button-wave";
 
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito" });
-const fredoka = Fredoka({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-fredoka" });
+const fredoka = Fredoka({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-fredoka",
+});
 
 export const metadata: Metadata = {
   title: "Soft Skills Academy",
@@ -16,8 +20,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#15121F" },
+    { media: "(prefers-color-scheme: light)", color: "#fdfeff" },
+    { media: "(prefers-color-scheme: dark)", color: "#001325" },
   ],
 };
 

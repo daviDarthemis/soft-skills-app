@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
-import Confetti from "./confetti";
-import { BoltIcon } from "./icons";
+import { useEffect, useState, type ReactNode } from "react";
+import Confetti from "../confetti";
+import { BoltIcon } from "../icons";
 import { cn } from "@/lib/utils";
 
 export type CelebrationProps = {
   /** "trail" mostra o emoji do perfil; "level" mostra o número do nível novo. */
   kind: "trail" | "level";
-  emoji?: string;
+  emoji?: ReactNode;
   level?: number;
   eyebrow: string;
   title: string;
@@ -32,14 +32,14 @@ export function Celebration({ kind, emoji, level, eyebrow, title, subtitle, xp, 
   }, []);
 
   return (
-    <div role="dialog" aria-modal="true" aria-label={`${eyebrow}: ${title}`} className="fixed inset-0 z-[90] grid animate-[fade-in_.25s_ease-out_both] place-items-center bg-night/90 px-6">
+    <div role="dialog" aria-modal="true" aria-label={`${eyebrow}: ${title}`} className="fixed inset-0 z-90 grid animate-[fade-in_.25s_ease-out_both] place-items-center bg-night/90 px-6">
       {landed && <Confetti pieces={90} />}
       <div className="flex w-full max-w-sm flex-col items-center text-center text-white">
         <div className="relative grid size-72 place-items-center">
           {/* Raios de sol girando atrás da insígnia */}
           <div
-            className="absolute inset-0 animate-[cel-rays_9s_linear_infinite] rounded-full opacity-0 [animation-delay:.6s] [mask-image:radial-gradient(circle,#000_35%,transparent_70%)]"
-            style={{ background: "repeating-conic-gradient(#FFC83D 0 10deg, transparent 10deg 30deg)" }}
+            className="absolute inset-0 animate-[cel-rays_9s_linear_infinite] rounded-full opacity-0 [animation-delay:.6s] mask-[radial-gradient(circle,#000_35%,transparent_70%)]"
+            style={{ background: "repeating-conic-gradient(var(--color-orange-500) 0 10deg, transparent 10deg 30deg)" }}
             aria-hidden="true"
           />
           {/* Estrelas que estouram no pouso */}
@@ -57,9 +57,9 @@ export function Celebration({ kind, emoji, level, eyebrow, title, subtitle, xp, 
             </svg>
           ))}
           {/* A insígnia: cai girando, quica e ganha um brilho que atravessa */}
-          <div className="relative grid size-40 animate-[cel-drop_1.05s_cubic-bezier(.3,.7,.4,1)_both] place-items-center overflow-hidden rounded-full border-[8px] border-sun bg-white shadow-[0_10px_0_#E0A100]">
+          <div className="relative grid size-40 animate-[cel-drop_1.05s_cubic-bezier(.3,.7,.4,1)_both] place-items-center overflow-hidden rounded-full border-8 border-sun bg-purple-50 shadow-[0_10px_0_var(--color-orange-700)]">
             {kind === "trail" ? (
-              <span className="text-7xl" aria-hidden="true">
+              <span className="grid size-full place-items-center p-2" aria-hidden="true">
                 {emoji}
               </span>
             ) : (
@@ -69,7 +69,7 @@ export function Celebration({ kind, emoji, level, eyebrow, title, subtitle, xp, 
               </span>
             )}
             <span
-              className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 animate-[cel-shine_.9s_ease-in-out_both] bg-gradient-to-r from-transparent via-white/80 to-transparent [animation-delay:1s]"
+              className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 animate-[cel-shine_.9s_ease-in-out_both] bg-linear-to-r from-transparent via-white/80 to-transparent [animation-delay:1s]"
               aria-hidden="true"
             />
           </div>
